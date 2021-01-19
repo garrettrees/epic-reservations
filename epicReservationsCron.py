@@ -8,11 +8,11 @@ import time
 
 #This script will reserve 7 days from today's date
 #Set your username, password & target reservation day (of the current month) before running script
-username = "greesy@gmail.com" #email address
-password = "R!d3-0r-d!3"
+username = "" #email address
+password = ""
 today = datetime.datetime.now().strftime("%d")
 reservation_day = str(int(today) + 7)
-driver = webdriver.Chrome("/Users/garrettrees/chromedriver")
+driver = webdriver.Chrome("")
 
 driver.implicitly_wait(10)
 #Set browser size (so all elements are visible)
