@@ -8,16 +8,23 @@ import time
 
 #This script will reserve 7 days from today's date
 #Set your username, password & target reservation day (of the current month) before running script
-username = "greesy@gmail.com" #email address
-password = "R!d3-0r-d!3"
+username = "" #email address
+password = ""
 today = datetime.datetime.now().strftime("%d")
 reservation_day = str(int(today) + 7)
+<<<<<<< HEAD
 driver = webdriver.Chrome("/Users/garrettrees/chromedriver")
 current_month = datetime.datetime.now().strftime("%m")
 
 #Set implicit wait for the life of the webdriver object
 driver.implicitly_wait(30)
 #Maximize browser (so all elements are visible)
+=======
+driver = webdriver.Chrome("")
+
+driver.implicitly_wait(30)
+#Set browser size (so all elements are visible)
+>>>>>>> 7618b2c07a9c3e9dac1e3f95975fa7f9a84fd8ff
 driver.maximize_window()
 #Go to Reservations page
 driver.get("https://www.epicpass.com/info/reservation-details.aspx")
