@@ -14,7 +14,7 @@ today = datetime.datetime.now().strftime("%d")
 reservation_day = str(int(today) + 7)
 driver = webdriver.Chrome("")
 
-driver.implicitly_wait(10)
+driver.implicitly_wait(30)
 #Set browser size (so all elements are visible)
 driver.maximize_window()
 #Go to Reservations page
