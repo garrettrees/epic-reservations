@@ -7,13 +7,25 @@ import datetime
 import time
 
 #This script will reserve 7 days from today's date
-#Set your username, password & target reservation day (of the current month) before running script
-username = "" #email address
-password = ""
 today = datetime.datetime.now().strftime("%d")
-reservation_day = str(int(today) + 7)
-driver = webdriver.Chrome("/Users/garrettrees/chromedriver")
 current_month = datetime.datetime.now().strftime("%m")
+
+driver = webdriver.Chrome("/Users/garrettrees/chromedriver")
+
+# Set username & password, user to make reservation for
+user = 'garrett'
+if user == 'byron':
+    username = ""  # email address
+    password = ""
+    user_xpath = "/html/body/div[3]/div/div[2]/div[2]/div/div/div/div[3]/div[2]/div[2]/div[1]/div[2]/div/ul/li[2]/span/label/span"
+    #username = get_parameters('epic_username_byron')
+    #password = get_parameters('epic_password_byron')
+else:
+    username = ''
+    password = ''
+    user_xpath = "/html/body/div[3]/div/div[2]/div[2]/div/div/div/div[3]/div[2]/div[2]/div[1]/div[2]/div/ul/li/span/label/span"
+    #username = get_parameters('epic_username_garrett')
+    #password = get_parameters('epic_password_garrett')
 
 #Set implicit wait for the life of the webdriver object
 driver.implicitly_wait(30)
@@ -43,24 +55,31 @@ check_availability = driver.find_element_by_xpath("/html/body/div[3]/div/div[2]/
 check_availability.click()
 
 #### Logic to handle reservations made less than 7 days from the end of the current month ####
-go_to_next_month = driver.find_element_by_xpath("/html/body/div[3]/div/div[2]/div[2]/div/div/div/div[3]/div[2]/div[1]/div[2]/div[2]/div/div[1]/button[2]")
-if (current_month == "1" or "3" or "5" or "7" or "8" or "10" or "12") and today >= "25":
-    reservation_day = str(7-(31-(int(today))))
+go_to_next_month = driver.find_element_by_xpath(
+    "/html/body/div[3]/div/div[2]/div[2]/div/div/div/div[3]/div[2]/div[1]/div[2]/div[2]/div/div[1]/button[2]")
+if current_month == "01" or current_month == "03" or current_month == "05" or current_month == "07" or current_month == "08" or current_month == "10" or current_month == "12" and today >= "25":
+    reservation_day = str(7 - (31 - (int(today))))
     go_to_next_month.click()
-elif current_month == "2" and today >= "22":
+elif current_month == "02" and today >= "22":
     reservation_day = str(7 - (28 - (int(today))))
     go_to_next_month.click()
-elif (current_month == "4" or "6" or "9" or "11") and today >= "24":
+elif current_month == "04" or current_month == "06" or current_month == "09" or current_month == "11" and today >= "24":
     reservation_day = str(7 - (30 - (int(today))))
     go_to_next_month.click()
 else:
     reservation_day = str(int(today) + 7)
+    go_to_next_month.click()
+
+print("Current month: " + current_month)
+print("Today is: " + today)
+print("Reservation day: " + reservation_day)
+
 #Select Date
 desired_date = driver.find_element_by_xpath("/html/body/div[3]/div/div[2]/div[2]/div/div/div/div[3]/div[2]/div[1]/div[2]/div[2]/div/div[4]/button[" + reservation_day + "]")
 desired_date.click()
 
 #Assign Pass Holders
-pass_holder = driver.find_element_by_xpath("/html/body/div[3]/div/div[2]/div[2]/div/div/div/div[3]/div[2]/div[2]/div[1]/div[2]/div/ul/li/span/label/span")
+pass_holder = driver.find_element_by_xpath(user_xpath)
 pass_holder.click()
 assign_button = driver.find_element_by_xpath("/html/body/div[3]/div/div[2]/div[2]/div/div/div/div[3]/div[2]/div[2]/div[1]/div[2]/div/div[3]/button[2]")
 assign_button.click()
