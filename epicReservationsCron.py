@@ -13,8 +13,8 @@ current_month = datetime.datetime.now().strftime("%m")
 driver = webdriver.Chrome("/Users/garrettrees/chromedriver")
 
 # Set username & password, user to make reservation for
-user = 'garrett'
-if user == 'byron':
+user = ''
+if user == '':
     username = ""  # email address
     password = ""
     user_xpath = "/html/body/div[3]/div/div[2]/div[2]/div/div/div/div[3]/div[2]/div[2]/div[1]/div[2]/div/ul/li[2]/span/label/span"
@@ -57,18 +57,17 @@ check_availability.click()
 #### Logic to handle reservations made less than 7 days from the end of the current month ####
 go_to_next_month = driver.find_element_by_xpath(
     "/html/body/div[3]/div/div[2]/div[2]/div/div/div/div[3]/div[2]/div[1]/div[2]/div[2]/div/div[1]/button[2]")
-if current_month == "01" or current_month == "03" or current_month == "05" or current_month == "07" or current_month == "08" or current_month == "10" or current_month == "12" and today >= "25":
+if (current_month == "01" or current_month == "03" or current_month == "05" or current_month == "07" or current_month == "08" or current_month == "10" or current_month == "12") and today >= "25":
     reservation_day = str(7 - (31 - (int(today))))
     go_to_next_month.click()
 elif current_month == "02" and today >= "22":
     reservation_day = str(7 - (28 - (int(today))))
     go_to_next_month.click()
-elif current_month == "04" or current_month == "06" or current_month == "09" or current_month == "11" and today >= "24":
+elif (current_month == "04" or current_month == "06" or current_month == "09" or current_month == "11") and today >= "24":
     reservation_day = str(7 - (30 - (int(today))))
     go_to_next_month.click()
 else:
     reservation_day = str(int(today) + 7)
-    go_to_next_month.click()
 
 print("Current month: " + current_month)
 print("Today is: " + today)
